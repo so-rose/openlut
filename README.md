@@ -1,7 +1,6 @@
-# openlut #
+# openlut
 
-Open-source tools for practical color management.
-=====
+## Open-source tools for practical color management.
 
 What is it?
 -----
