@@ -72,10 +72,10 @@ import wand.display
 
 from wand.api import library
 
-library.MagickSetCompressionQuality.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
-library.MagickSetCompression.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
+#~ library.MagickSetCompressionQuality.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
+#~ library.MagickSetCompression.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
 
-COMPRESS_TYPES = dict(zip(wand.image.COMPRESSION_TYPES, tuple(map(ctypes.c_int, range(len(wand.image.COMPRESSION_TYPES))))))
+#~ COMPRESS_TYPES = dict(zip(wand.image.COMPRESSION_TYPES, tuple(map(ctypes.c_int, range(len(wand.image.COMPRESSION_TYPES))))))
 
 
 
