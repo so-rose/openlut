@@ -16,10 +16,11 @@ I wanted it to cover this niche simply and consistently, something color managem
 What About OpenColorIO? Why does this exist?
 ------
 OpenColorIO is a wonderful library, but seems geared towards managing the complexity of many larger applications in a greater pipeline.
-openlut is more simple; it doesn't care about the big picture - you simply read in images, transform them, then output them. openlut
-also focuses greatly on the "how" of these transformations with tools that eg. create or resize LUTs, things missing in OCIO.
+openlut is more simple; it doesn't care about the big picture - you just do consistent operations on images. openlut also has tools to deal
+with these building blocks, unlike OCIO - resizing LUTs, etc. .
 
-Since it's a library, though, it's perfectly feasable (if not easy) to build such a greater pipeline based on openlut's simple color transformations.
+Indeed, OCIO is just a system these basic operations using LUTs - in somewhat unintuitive ways, in my opinion. You could setup a similar system
+using openlut's toolkit.
 
 
 Installation
@@ -29,7 +30,7 @@ I'll put it on pip eventually (when I figure out how!). For now, just download t
 To run openlut.py, first make sure you have the *Dependencies*. To run the test code at the bottom (make sure openlut is in the same
 directory as testpath; it needs to load test.exr), you can then run:
 
-`python3 openlut.py -t`
+`python3 main.py -t`
 
 To use in your code, simply `import` the module at the top of your file.
 
@@ -56,7 +57,7 @@ The **Transform** objects themselves have plenty of features - like LUT, with `o
 input matrices, or automatic spline-based interpolation of very small 1D LUTs - to make them helpful in and of themselves!
 
 
-The best way to demonstrate from here, I think, is to show some test code: (run python3 openlut.py -t to see it work)
+The best way to demonstrate this, I think, is to show some test code: (run python3 openlut.py -t to see it work)
 
 ```python
 #Open any format image. Try it with exr/dpx/anything!
