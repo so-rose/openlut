@@ -50,6 +50,7 @@ py::array_t<float> gam(py::array_t<float> arr, const std::function<float(float)>
 		}
 		
 		return result;
+	}
 }
 
 

@@ -8,9 +8,11 @@ Color Management: openlut deals with the raw RGB values, does its work, then put
 Dependencies:
 	-numpy: Like, everything.
 	-wand: Saving/loading images.
+	-PyOpenGL - For image viewer and other future graphics processing.
+	-pygame - For the physical display in the viewer.
 	-scipy - OPTIONAL: For spline interpolation.
 	
-Easily get all deps: sudo pip3 install numpy wand numba scipy
+Easily get all deps: sudo pip3 install numpy wand scipy PyOpenGL pygame
 
 *Make sure you get the Python 3.X version of these packages!!!
 

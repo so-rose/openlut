@@ -3,7 +3,7 @@ from functools import reduce
 import operator as oper
 
 import numpy as np
-import numba
+#~ import numba
 
 from .Transform import Transform
 
@@ -32,7 +32,7 @@ class ColMat(Transform) :
 		return ColMat(reduce(ColMat.__mul__, reversed(inMats))) #Works because multiply is actually non-commutative dot.
 		#This is why we reverse inMats.
 		
-	@numba.jit(nopython=True)
+	#~ @numba.jit(nopython=True)
 	def __optDot(img, mat, shp, out) :
 		'''
 		Dots the matrix with each tuple of colors in the img.

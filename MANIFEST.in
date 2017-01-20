@@ -1,1 +1,2 @@
 recursive-include openlut *.py
+include openlut/lib/olOpt.cpp
