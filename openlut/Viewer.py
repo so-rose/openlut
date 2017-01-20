@@ -1,7 +1,14 @@
 import pygame
 from pygame.locals import *
-from OpenGL.GL import *
-from OpenGL.GLU import *
+
+MOD_OPENGL = True
+try :
+	from OpenGL.GL import *
+	from OpenGL.GLU import *
+except :
+	print('Unable to load OpenGL. Make sure your graphics drivers are installed & up to date!')
+	MOD_OPENGL = False
+	
 
 import sys, os, os.path
 
@@ -99,6 +106,8 @@ class Viewer :
 		'''
 		img is an rgb array.
 		'''
+		if not MOD_OPENGL: print("OpenGL not enabled. Viewer won't start."); return
+		
 		v = Viewer((xRes, yRes), title)
 		v.bindTex(img)
 		
