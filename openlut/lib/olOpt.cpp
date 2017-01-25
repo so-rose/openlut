@@ -152,17 +152,25 @@ PYBIND11_PLUGIN(olOpt) {
 	
 	mod.def(	"gam",
 				&gam,
-				"Apply any one-argument C++ function to a flattened numpy array; vectorized & parallel."
+				"Apply any one-argument C++ function to a flattened numpy array; vectorized & parallel.",
+				py::arg("arr"),
+				py::arg("g_func")
 	);
 	
 	mod.def(	"matr",
 				&matr,
-				"Apply any flattened color matrix to a flattened numpy image array; vectorized & parallel."
+				"Apply any flattened color matrix to a flattened numpy image array; vectorized & parallel.",
+				py::arg("img"),
+				py::arg("mat")
 	);
 	
 	mod.def(	"lut1dlin",
 				&lut1dlin,
-				"Apply any 1D LUT to a flattened numpy image array; vectorized & parallel."
+				"Apply any 1D LUT to a flattened numpy image array; vectorized & parallel.",
+				py::arg("img"),
+				py::arg("lut"),
+				py::arg("lBound"),
+				py::arg("hBound")
 	);
 	
 	
@@ -171,42 +179,50 @@ PYBIND11_PLUGIN(olOpt) {
 	
 	mod.def(	"lin",
 				&lin,
-				"The linear function."
+				"The linear gamma function.",
+				py::arg("x")
 	);
 	
 	mod.def(	"sRGB",
 				&sRGB,
-				"The sRGB function."
+				"The lin --> sRGB gamma function.",
+				py::arg("x")
 	);
 	
 	mod.def(	"sRGBinv",
 				&sRGBinv,
-				"The sRGBinv function."
+				"The sRGB --> lin function.",
+				py::arg("x")
 	);
 	
 	mod.def(	"Rec709",
 				&Rec709,
-				"The Rec709 function."
+				"The lin --> Rec709 function.",
+				py::arg("x")
 	);
 	
 	mod.def(	"ReinhardHDR",
 				&ReinhardHDR,
-				"The ReinhardHDR function."
+				"The lin --> ReinhardHDR function.",
+				py::arg("x")
 	);
 	
 	mod.def(	"sLog",
 				&sLog,
-				"The sLog function."
+				"The lin --> sLog function.",
+				py::arg("x")
 	);
 	
 	mod.def(	"sLog2",
 				&sLog2,
-				"The sLog2 function."
+				"The lin --> sLog2 function.",
+				py::arg("x")
 	);
 	
 	mod.def(	"DanLog",
 				&DanLog,
-				"The DanLog function."
+				"The lin --> DanLog function.",
+				py::arg("x")
 	);
 	
 	return mod.ptr();

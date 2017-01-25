@@ -25,12 +25,23 @@ from .LUT import LUT
 from .Viewer import Viewer
 
 class ColMap :
-	def __init__(self, rgbArr) :
+	def __init__(self, resX, resY, depth = 16) :
+		self.depth = depth
+		self.rgbArr = 
+		
+	@staticmethod
+	def fromArray(imgArr, depth = 16) :
+		self.depth = depth
+		
 		self.rgbArr = np.array(rgbArr, dtype=np.float32) #Enforce 32 bit floats. Save memory.
 		
+	@staticmethod
 	def fromIntArray(imgArr) :
 		bitDepth = int(''.join([i for i in str(imgArr.dtype) if i.isdigit()]))
-		return ColMap(np.divide(imgArr.astype(np.float64), 2 ** bitDepth - 1))
+		
+		self.depth = bitDepth
+		
+		return ColMap(np.divide(imgArr.astype(np.float32), 2 ** bitDepth - 1))
 		
 #Operations - returns new ColMaps.
 	def apply(self, transform) :
@@ -38,7 +49,7 @@ class ColMap :
 		Applies a Transform object by running its apply method.
 		'''
 		#~ return transform.apply(self)
-		return ColMap(transform.sample(self.asarray()))
+		return ColMap.fromArray(transform.sample(self.asarray()))
 		
 #IO Functions
 	@staticmethod
@@ -186,4 +197,4 @@ class ColMap :
 		
 	#Overloads
 	def __repr__(self) :
-		return 'ColMap( \n\trgbArr = {0}\n)'.format('\n\t\t'.join([line.strip() for line in repr(self.rgbArr).split('\n')]))
+		return 'ColMap.fromArray( \n\trgbArr = {0}\n)'.format('\n\t\t'.join([line.strip() for line in repr(self.rgbArr).split('\n')]))

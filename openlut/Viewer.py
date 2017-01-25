@@ -1,6 +1,6 @@
 import multiprocessing as mp
 
-#Future: Use GLFW
+#Future: Use GLFW!
 import pygame
 from pygame.locals import *
 

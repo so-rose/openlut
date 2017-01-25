@@ -15,6 +15,10 @@ from setuptools import find_packages
 #Better - Mac & Linux only.
 #~ pyPath = '/usr/local/include/python{}'.format(get_python_version())'
 
+#Make sure we're using gcc.
+os.environ["CC"] = "g++"
+os.environ["CXX"] = "g++"
+
 cpp_args = ['-fopenmp', '-std=gnu++14', '-O3']
 link_args = ['-fopenmp']
 

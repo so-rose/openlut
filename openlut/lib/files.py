@@ -21,6 +21,7 @@ import multiprocessing as mp
 
 import numpy as np
 
+#Matplotlib is optional.
 MOD_MATPLOTLIB = False
 try:
 	import matplotlib.pyplot as plt

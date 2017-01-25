@@ -1,6 +1,6 @@
-# openlut
+# openlut - Open-source tools for practical color management.
 
-## Open-source tools for practical color management.
+**Main development happens at https://git.sofusrose.com/so-rose/openlut - take a look!
 
 What is it?
 -----

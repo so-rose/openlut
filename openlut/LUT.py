@@ -4,6 +4,7 @@ import types
 
 import numpy as np
 
+#scipy is an optional dependency.
 MOD_SCIPY = False
 try :
 	from scipy.interpolate import splrep, splev
