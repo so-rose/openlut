@@ -86,7 +86,6 @@ class ColMap :
 		with wand.image.Image(blob=binData, format=fmt, width=width, height=height) as img:
 			return ColMap.fromIntArray(np.fromstring(img.make_blob("RGB"), dtype='uint{}'.format(img.depth)).reshape(img.height, img.width, 3))
 	
-	@staticmethod
 	def toBinary(self, fmt, depth=16) :
 		'''
 		Using Wand blob functionality
@@ -95,7 +94,6 @@ class ColMap :
 			img.format = fmt
 			return img.make_blob()
 	
-	@staticmethod
 	def save(self, path, compress = None, depth = None) :
 		'''
 		Save the image. The filetype will be inferred from the path, and the appropriate backend will be used.
@@ -140,7 +138,7 @@ class ColMap :
 	#Display Functions
 	
 	@staticmethod
-	def display(path, width = 1200) :
+	def display(path, width = 1000) :
 		'''
 		Shows an image at a path without making a ColMap.
 		'''
@@ -153,7 +151,7 @@ class ColMap :
 		
 		Viewer.run(img, xRes, yRes, title = os.path.basename(path))
 		
-	def show(self, width = 1200) :
+	def show(self, width = 1000) :
 		#Use my custom OpenGL viewer!
 		Viewer.run(self.rgbArr, width, int(width * self.rgbArr.shape[0]/self.rgbArr.shape[1]))
 		

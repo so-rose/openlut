@@ -15,7 +15,7 @@ from .Transform import Transform
 from .lib import olOpt as olo
 
 class LUT(Transform) :
-	def __init__(self, dims = 1, size = 16384, title = "openlut_LUT", iRange = (0.0, 1.0)) :	
+	def __init__(self, dims = 1, size = 4096, title = "openlut_LUT", iRange = (0.0, 1.0)) :	
 		'''
 		Create an identity LUT with given dimensions (1 or 3), size, and title.
 		'''	
@@ -33,7 +33,7 @@ class LUT(Transform) :
 			print("3D LUT Not Implemented!")
 			#~ self.array = np.linspace(self.range[0], self.range[1], self.size**3).reshape(self.size, self.size, self.size) #Should make an identity size x size x size array.
 		
-	def lutFunc(func, size = 16384, dims = 1, title="openlut_FuncGen", iRange = (0.0, 1.0)) :
+	def lutFunc(func, size = 4096, dims = 1, title="openlut_FuncGen", iRange = (0.0, 1.0)) :
 		'''
 		Creates a LUT from a simple function.
 		'''
@@ -69,11 +69,8 @@ class LUT(Transform) :
 		return LUT.lutArray(splev(np.linspace(0, 1, num=len(idArr)), splrep(idArr, mapArr)))
 		
 #LUT Functions.
-	def __interp(q, cpu, spSeq, ID, array, spl) :
-		if spl :
-			q.put( (cpu, splev(spSeq, splrep(ID, array))) ) #Spline Interpolation. Pretty quick, considering.
-		else :
-			q.put( (cpu, np.interp(spSeq, ID, array)) )
+	def _splInterp(q, cpu, spSeq, ID, array) :
+		q.put( (cpu, splev(spSeq, splrep(ID, array))) ) #Spline Interpolation. Pretty quick, considering.
 	
 	def sample(self, fSeq, spl=True) :
 		'''
@@ -91,21 +88,22 @@ class LUT(Transform) :
 				
 		fSeq = np.array(fSeq)
 		if self.dims == 1 :
-			#~ return np.interp(spSeq, self.ID, self.array)
-			
 			#If scipy isn't loaded, we can't use spline interpolation!
-			if (not MOD_SCIPY) or self.size > 1023: spl = False # Auto-adapts big LUTs to use the faster, more brute-forceish, linear interpolation.
-			out = []
-			q = mp.Queue()
-			splt = Transform.spSeq(fSeq, mp.cpu_count())
-			for cpu in range(mp.cpu_count()) :
-				p = mp.Process(target=LUT.__interp, args=(q, cpu, splt[cpu], self.ID, self.array, spl))
-				p.start()
-				
-			for num in range(len(splt)) :
-				out.append(q.get())
-				
-			return np.concatenate([seq[1] for seq in sorted(out, key=lambda seq: seq[0])], axis=0)
+			if (not MOD_SCIPY) or self.size > 25 : # Auto-adapts all but the smallest LUTs to use the faster linear interpolation.
+				return olo.lut1dlin(fSeq.reshape(reduce(lambda a, b: a*b, fSeq.shape)), self.array, self.range[0], self.range[1]).reshape(fSeq.shape)
+			else :
+				#~ return np.interp(spSeq, self.ID, self.array) #non-threaded way.
+				out = []
+				q = mp.Queue()
+				splt = Transform.spSeq(fSeq, mp.cpu_count())
+				for cpu in range(mp.cpu_count()) :
+					p = mp.Process(target=LUT._splInterp, args=(q, cpu, splt[cpu], self.ID, self.array))
+					p.start()
+					
+				for num in range(len(splt)) :
+					out.append(q.get())
+					
+				return np.concatenate([seq[1] for seq in sorted(out, key=lambda seq: seq[0])], axis=0)
 			
 		elif self.dims == 3 :
 			print("3D LUT Not Implemented!")

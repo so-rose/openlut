@@ -15,7 +15,7 @@ from setuptools import find_packages
 #Better - Mac & Linux only.
 #~ pyPath = '/usr/local/include/python{}'.format(get_python_version())'
 
-cpp_args = ['-fopenmp', '-std=gnu++14']
+cpp_args = ['-fopenmp', '-std=gnu++14', '-O3']
 link_args = ['-fopenmp']
 
 olOpt = Extension(	'openlut.lib.olOpt',
@@ -27,7 +27,7 @@ olOpt = Extension(	'openlut.lib.olOpt',
 		)
 
 setup(	name = 'openlut',
-		version = '0.1.4',
+		version = '0.2.0',
 		description = 'OpenLUT is a practical color management library.',
 		author = 'Sofus Rose',
 		author_email = 'sofus@sofusrose.com',

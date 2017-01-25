@@ -6,5 +6,9 @@ from .Func import Func
 from .ColMat import ColMat
 from .Viewer import Viewer
 
+#Ensure the package namespace lines up.
+from . import gamma
+from . import gamut
+
 __all__ = ['ColMap', 'Transform', 'LUT', 'Func', 'ColMat', 'Viewer', 'gamma', 'gamut']
 

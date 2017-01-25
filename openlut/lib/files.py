@@ -19,6 +19,17 @@ Copyright 2016 Sofus Rose
 import sys, os, time
 import multiprocessing as mp
 
+import numpy as np
+
+MOD_MATPLOTLIB = False
+try:
+	import matplotlib.pyplot as plt
+	import matplotlib.mlab as mlab
+	
+	MOD_MATPLOTLIB = True
+except:
+	print("Matplotlib not installed. Graphs won't be drawn")
+
 class Files :
 	"""
 	The Files object is an immutable sequence of files, which supports writing simultaneously to all the files.
@@ -196,6 +207,41 @@ class Log(ColLib) :
 			return self.getLogTime() - self.sTimes[run]
 		else :
 			raise ValueError('Run wasn\'t found!!')
+			
+	@staticmethod
+	def bench(f, args=[], kwargs={}, trials=15, graph=False) :
+		def t(): l = Log(); l.startTime(0); f(*args, **kwargs); return l.getTime(0)
+		
+		data = np.array([t() for i in range(trials)])
+		anyl = {		'mean'		: np.mean(data),
+						'median'	: np.median(data),
+						'std_dev'	: np.std(data),
+						'vari'		: np.std(data) ** 2,
+						'total'		: sum(data)
+		}
+		
+		if graph: Log.graphBench(anyl)
+			
+		return anyl
+		
+	@staticmethod
+	def graphBench(anyl) :
+		if MOD_MATPLOTLIB :
+			fig = plt.figure()
+			
+			x = np.linspace(-3 * anyl['std_dev'] + anyl['mean'], 3 * anyl['std_dev'] + anyl['mean'], 100)
+			
+			plt.plot(x, mlab.normpdf(x, anyl['mean'], anyl['std_dev']))
+			
+			plt.axvline(x = anyl['mean'], color='red', linestyle = "--")
+			plt.text(	anyl['mean'] - 0.2 * anyl['std_dev'], 0, 'mean',
+						horizontalalignment = 'left', verticalalignment='bottom',
+						rotation = 90, fontsize=10, fontstyle='italic'
+			)
+			plt.xlabel('Time (Seconds)', fontsize=15)
+			plt.ylabel('Distribution', fontsize=11)
+			
+			plt.show()
 
 	def compItem(self, state, time, *text) :
 		"""

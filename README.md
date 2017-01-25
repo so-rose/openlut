@@ -4,23 +4,25 @@
 
 What is it?
 -----
-openlut is, at its core, a color management library, accessible from **Python 3.5+**. It's built on my own color pipeline needs, which includes managing
+openlut is, at its core, a transform-focused color management library, accessible from **Python 3.5+**. It's built on my own color pipeline needs, which includes managing
 Lookup Tables, Gamma/Gamut functions/matrices, applying color transformations, etc. .
 
-openlut is also a tool. Included soon will be a command line utility letting you perform complex color transformations from the comfort of
-your console. In all cases, interactive usage from a Python console is easy.
+openlut is also a practical tool. Included soon will be a command line utility letting you perform complex color transformations from the comfort of
+your console. Included already is an OpenGL image viewer, which might grow in the future to play sequences.
 
-I wanted it to cover this niche simply and consistently, something color management often isn't! Take a look; hopefully you'll agree :) !
+I wanted it to cover this niche simply and consistently, with batteries included (a library of gamma functions and color gamut matrices).
+Color management doesn't have to be so difficult!
 
 
 What About OpenColorIO? Why does this exist?
 ------
-OpenColorIO is a wonderful library, but seems geared towards managing the complexity of many larger applications in a greater pipeline.
-openlut is more simple; it doesn't care about the big picture - you just do consistent operations on images. openlut also has tools to deal
-with these building blocks, unlike OCIO - resizing LUTs, etc. .
+OpenColorIO does amazing work - but mostly in the context of large applications, not-simple config files, and self-defined color space
+(with the full range of int/float bit depth specifics, etc.)
 
-Indeed, OCIO is just a system these basic operations using LUTs - in somewhat unintuitive ways, in my opinion. You could setup a similar system
-using openlut's toolkit.
+openlut is all about images and the transforms on images. Everything happens in (0, 1) float space. Large emphasis is placed on managing the 
+tools themselves as well - composing matrices, resizing LUTs, defining new gamma functions, etc. .
+
+In many ways, OCIO is a system stringing basic operations together. I'd be perfectly plausible to write an OCIO alternative with openlut in the backend.
 
 
 Installation
@@ -33,9 +35,9 @@ Simply use pip: `sudo pip3 install openlut` (pip3 denotes that you must use a Py
 
 *If it's breaking, try running `sudo pip3 install -U pip setuptools`. Sometimes they are out of date.*
 
-Installing Dependencies
+Installing Compile Dependencies
 -----
-Not Difficult, I promise!
+For the moment, I don't have a Mac wheel. Not Difficult, I promise!
 
 On Debian/Ubuntu: `sudo apt-get install python3-pip gcc pybind11-dev libmagickwand-dev`
 On Mac: `brew install python3 gcc pybind11 imagemagick`
