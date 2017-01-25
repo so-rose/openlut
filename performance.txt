@@ -3,8 +3,8 @@
 The amount of time to apply each given Transform to a 1920*1080 Image on my 4 code (8 thread) CPU:
 
 apply(ol.LUT): 0.026462205679908948,, (avg. 100 Trials) *sRGB LUT
-apply(ol.Func): 0.064781568400030659, (avg. 100 Trials) *C++ Function sRGB
-apply(ol.Func): 0.55080005893347939, (avg. 15 Trials) *Python Function sRGB
+apply(ol.Func): 0.064781568400030659, (avg. 100 Trials) *Builtin (C++) Function sRGB
+apply(ol.Func): 0.55080005893347939, (avg. 15 Trials) *Generic (Python) Function sRGB
 apply(ol.ColMat): 0.019661276286992234, (avg. 1000 Trials)
 
 #OLD

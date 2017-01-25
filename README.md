@@ -27,35 +27,29 @@ In many ways, OCIO is a system stringing basic operations together. I'd be perfe
 
 Installation
 -----
-Simply use pip: `sudo pip3 install openlut` (pip3 denotes that you must use a Python 3 version of pip). Keep in mind, there are some external dependencies:
+First: **Ensure you have dependencies!!!** The pip command will break without them.
+
+Simply use pip: `pip3 install openlut` (pip3 denotes that you must use a Python 3 version of pip). Keep in mind, there are some external dependencies:
 * **Python 3.5**: This is Python; you need Python.
 * **gcc**: This is needed to compile the C++ extensions.
 * **pybind11**: This is a library needed to link the C++ extension into Python. pip version is being difficult...
 * **imagemagick**: For all file IO. It's not like I was gonna write that myself :) .
 
-*If it's breaking, try running `sudo pip3 install -U pip setuptools`. Sometimes they are out of date.*
+*If it's breaking, try running `pip3 install -U pip setuptools`. Sometimes they are out of date.*
+*Linux: You make need to use `sudo` before the command. Ignore the AssertionError when building the wheel; it doesn't affect anything.*
 
-Installing Compile Dependencies
+Installing Dependencies
 -----
-For the moment, I don't have a Mac wheel. Not Difficult, I promise!
+Not Difficult, I promise!
 
 On Debian/Ubuntu: `sudo apt-get install python3-pip gcc pybind11-dev libmagickwand-dev`
+
 On Mac: `brew install python3 gcc pybind11 imagemagick`
-* You will need Homebrew ( copy/paste a command from http://brew.sh/ ) and XCode Command Line Tools for gcc (it should prompt you to install this).
-* Disclaimer - gcc took its sweet time compiling/installing on my old Mac...
+* You will need Homebrew ( copy/paste a command from http://brew.sh/ to install ) and XCode Command Line Tools for gcc (it should prompt you to install this).
+* If this doesn't install pip, run `brew install python3; curl https://bootstrap.pypa.io/get-pip.py | python3`
 
+On Other: You need **python 3.5**, pip, a newer version (must support C++14) of **gcc**, and pybind11 in your `includes`.
 
-Dependencies
------
-There are some dependencies that you must get. Keep in mind that it's **Python 3.X** *only*; all dependencies must be their 3.X versions.
-
-### Getting python3 and pip3
-If you're on a **Mac**, run this to get python3 and pip3: `brew install python3; curl https://bootstrap.pypa.io/get-pip.py | python3`
-If you're on **Linux**, you should already have python3 and pip3 - otherwise see your distribution repositories.
-
-### Dependency Installation
-You need **Python 3.5**, **Pip**, a newer version (must support C++14) of **gcc**, and pybind11 in your `includes`. This is trivial on Debian/Ubuntu:
-* `sudo apt-get install python3-pip 
 
 Basic Library Usage
 -----
