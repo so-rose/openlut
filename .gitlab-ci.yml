@@ -32,7 +32,7 @@ build_docs:
         - ./mkDocs.sh
     artifacts:
         paths:
-            - docs/build/html
+            - doc/build/html
 
 test:
     stage: test
