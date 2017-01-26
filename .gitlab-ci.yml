@@ -3,19 +3,17 @@ image: python:3.5
 stages:
     - build
     - test
-    - deploy
+    #~ - deploy
 #    - review
     
 
 before_script: 
-    #~ - apt-get update && apt-get -y install gcc libmagickwand-dev make
+    - apt-get update && apt-get -y install git-lfs
+    - git lfs install
     - pip3 install -U pip setuptools wheel
     - pip3 install -r requirements.txt
     - python3 setup.py build_ext -i #Need the C++ extension only.
     - mkdir testpath
-
-after_script:
-    - rm -rf dist build docs/build openlut.egg-info
 
 build:
     stage: build
@@ -39,15 +37,16 @@ build_docs:
 test:
     stage: test
     script:
+        - git lfs pull
         - python3 tests/suite.py
         
-deploy_docs:
-    stage: deploy
-    environment:
-        name: Documentation
-        url: https://www.sofusrose.com/openlut
-    script:
-        - docs/upload.sh
+#~ deploy_docs:
+    #~ stage: deploy
+    #~ environment:
+        #~ name: Documentation
+        #~ url: https://www.sofusrose.com/openlut
+    #~ script:
+        #~ - docs/upload.sh
     #~ when: manual
     
 
