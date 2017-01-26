@@ -13,6 +13,8 @@ import pybind11
 
 def read(fname):
     return open(join(path.dirname(__file__), fname)).read()
+    
+pypi_deps = ['numpy', 'wand', 'scipy', 'pygame','PyOpenGL', 'setuptools', 'pybind11']
 
 #Make sure we're using gcc.
 os.environ["CC"] = "g++"
@@ -46,7 +48,7 @@ setup(	name = 'openlut',
 		
 		keywords = ['color', 'image', 'images', 'processing'],
 		
-		install_requires = ['numpy', 'wand', 'scipy', 'pygame','PyOpenGL', 'setuptools', 'pybind11'],
+		install_requires = pypi_deps,
 		
 		classifiers = [
 			'Development Status :: 3 - Alpha',
