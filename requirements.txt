@@ -5,3 +5,5 @@ scipy
 Wand
 setuptools
 pybind11
+sphinx
+
