@@ -6,4 +6,4 @@ Wand
 setuptools
 pybind11
 sphinx
-
+sphinx_rtd_theme
