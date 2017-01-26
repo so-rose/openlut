@@ -6,13 +6,15 @@ image: sorose/graphics:v8
 
 stages:
     - build
-    - build-docs
-    - deploy-docs
+    - build_docs
+    - deploy_docs
     - test
 #    - review
 
 before_script: 
     - apt update && apt -y install python3-pip gcc libmagickwand-dev
+    
+after_script:
     - rm -rf dist build docs/build openlut.egg-info
 
 build:
@@ -24,7 +26,7 @@ build:
         paths:
             - dist/*
 
-build-docs:
+build_docs:
     stage: build-docs
     script:
         - ./mkDocs.sh
@@ -32,7 +34,7 @@ build-docs:
         paths:
             - docs/build/html
             
-deploy-docs:
+deploy_docs:
     stage: deploy-docs
     environment:
         name: Documentation
