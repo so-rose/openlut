@@ -1,4 +1,4 @@
-image: sorose/graphics:v8
+image: sorose/graphics:main
 
 stages:
     - build
