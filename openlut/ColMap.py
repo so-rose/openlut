@@ -50,13 +50,13 @@ class ColMap :
 	
 #Constructors
 	def __init__(self, shape, depth = None) :
-		if depth not in ColMap.DEPTHS.values :
-			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values)))
+		if depth not in ColMap.DEPTHS.values() :
+			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values())))
 		
 		if len(shape) not in (2, 3) :
 			raise ValueError('Please use a valid numpy image array shape!')
 		
-		self.depth = depth if depth is None else ColMap.DEPTHS['full'] #This represents the real precision of data.
+		self.depth = depth if depth is not None else ColMap.DEPTHS['full'] #This represents the real precision of data.
 		self.rgbArr = np.zeros((shape[0], shape[1], 3), dtype=np.float32)
 		
 	@staticmethod
@@ -217,8 +217,8 @@ class ColMap :
 		**NOTE: EXRs are only saveable as 16-bit integer, with no compression options. This is an IM/Wand library limitation.**
 		'''
 		
-		if depth not in ColMap.DEPTHS.values :
-			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values)))
+		if depth not in ColMap.DEPTHS.values() :
+			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values())))
 		
 		try :
 			saveFunction = {
@@ -248,8 +248,8 @@ class ColMap :
 		**NOTE: EXRs are only saveable as 16-bit integer, with no compression options. This is an IM/Wand library limitation.**
 		'''
 		
-		if depth not in ColMap.DEPTHS.values :
-			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values)))
+		if depth not in ColMap.DEPTHS.values() :
+			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values())))
 		
 		data = self.apply(LUT.lutFunc(gamma.sRGB)) if path[path.rfind('.')+1:] == 'dpx' else self
 		i = data.asWandImg(depth)
@@ -311,8 +311,8 @@ class ColMap :
 		See http://docs.wand-py.org/en/0.4.4/index.html for Wand docs.
 		'''
 		
-		if depth not in ColMap.DEPTHS.values :
-			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values)))
+		if depth not in ColMap.DEPTHS.values() :
+			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values())))
 		
 		if depth is None :
 			d = ColMap.DEPTHS['half'] if self.depth >= ColMap.DEPTHS['half'] else self.depth #Highest is half - 16.
@@ -342,8 +342,8 @@ class ColMap :
 		**NOTE: Uses Wand's "blob" functionality, and as such incurs Wand's limitations.**
 		'''
 		
-		if depth not in ColMap.DEPTHS.values :
-			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values)))
+		if depth not in ColMap.DEPTHS.values() :
+			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values())))
 		
 		with self.asWandImg(d) as img :
 			img.format = fmt
@@ -369,8 +369,8 @@ class ColMap :
 		:rtype: np.array
 		"""
 		
-		if depth not in ColMap.DEPTHS.values :
-			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values)))
+		if depth not in ColMap.DEPTHS.values() :
+			raise ValueError('Bit depth not supported! Supported bit depths: {}'.format(', '.join(ColMap.DEPTHS.values())))
 		
 		if depth is None :
 			d = self.depth #No limits here.

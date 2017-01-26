@@ -2,50 +2,53 @@ image: python:3.5
 
 stages:
     - build
-    - build_docs
     - test
-    - deploy_docs
+    - deploy
 #    - review
     
+
+before_script: 
+    #~ - apt-get update && apt-get -y install gcc libmagickwand-dev make
+    - pip3 install -U pip setuptools wheel
+    - pip3 install -r requirements.txt
+    - python3 setup.py build_ext -i #Need the C++ extension only.
+    - mkdir testpath
+
 after_script:
     - rm -rf dist build docs/build openlut.egg-info
 
 build:
     stage: build
-    before_script: 
-        - apt-get update && apt-get -y install gcc libmagickwand-dev make
-        - pip3 install -U pip setuptools wheel
-        - pip3 install -r requirements.txt
-        - ./mkDocs.sh
-    script: 
+    script:
         - python3 setup.py sdist #Build source distribution.
         - python3 setup.py bdist_wheel #Build Linux wheel.
     artifacts:
         paths:
-            - dist/*
+            - dist
+            
+# run tests using the binary built before.
 
 build_docs:
-    stage: build_docs
-    before_script: 
-        - pip3 install sphinx
+    stage: build
     script:
         - ./mkDocs.sh
     artifacts:
         paths:
             - docs/build/html
-            
+
+test:
+    stage: test
+    script:
+        - python3 tests/suite.py
+        
 deploy_docs:
-    stage: deploy_docs
+    stage: deploy
     environment:
         name: Documentation
         url: https://www.sofusrose.com/openlut
     script:
         - docs/upload.sh
-    when: manual
+    #~ when: manual
+    
 
-# run tests using the binary built before.
-test:
-    stage: test
-    script:
-        - python3 tests/suite.py
         

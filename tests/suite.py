@@ -1,3 +1,9 @@
+import os, sys
+
+#Script must be called from openlut root.
+
+sys.path.insert(0, '.')
+
 from openlut import *
 
 def runTest(inPath, path) :
@@ -51,4 +57,4 @@ def runTest(inPath, path) :
 	#Color management is simple: openlut doesn't touch your data, unless you tell it to with a Transform. So, the data that goes in, goes out, unless a Transform was applied.
 
 if __name__ == "__main__" :
-	runTest()
+	runTest('img_test', 'testpath')
