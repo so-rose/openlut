@@ -1,4 +1,4 @@
-image: sorose/graphics:main
+image: debian:sid
 
 stages:
     - build
