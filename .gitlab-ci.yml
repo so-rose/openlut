@@ -1,4 +1,4 @@
-image: debian:sid
+image: python:3.5
 
 stages:
     - build
