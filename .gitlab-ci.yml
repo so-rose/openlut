@@ -13,7 +13,7 @@ after_script:
 build:
     stage: build
     before_script: 
-        - apt update && apt -y install python3-pip gcc libmagickwand-dev
+        - apt-get update && apt-get -y install python3-pip gcc libmagickwand-dev
     script: 
         - python3 setup.py sdist #Build source distribution.
         - python3 setup.py bdist_wheel #Build Linux wheel.
