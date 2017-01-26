@@ -2,11 +2,21 @@
 
 REMOTE=sofus@wakingnexus
 
-rsync -avzP build/html/* $REMOTE:~/openlut/
+#Remove the old docs.
+ssh $REMOTE 'bash -s'  << 'ENDSSH'
 
-#ssh $REMOTE 'bash -s'  << 'ENDSSH'
-#
-#cd /var/www/openlut
-#chown -R www-data:www-data *
-#
-#ENDSSH
+rm -rf /var/www/openlut/*
+
+ENDSSH
+
+#Sync over the new docs.
+rsync -avzP build/html/* $REMOTE:/var/www/openlut/
+
+#Set strong permissions.
+ssh $REMOTE 'bash -s'  << 'ENDSSH'
+
+chown -R sofus:www-data /var/www/openlut/*
+find /var/www/openlut -type f -exec chmod 0640 {} \;
+find /var/www/openlut -type d -exec chmod 2750 {} \;
+
+ENDSSH

@@ -35,7 +35,6 @@ First: **Ensure you have dependencies!!!** The pip command will break without th
 Simply use pip: `pip3 install openlut` (pip3 denotes that you must use a Python 3 version of pip). Keep in mind, there are some external dependencies:
 * **Python 3.5**: This is Python; you need Python.
 * **gcc**: This is needed to compile the C++ extensions.
-* **pybind11**: This is a library needed to link the C++ extension into Python. pip version is being difficult...
 * **imagemagick**: For all file IO. It's not like I was gonna write that myself :) .
 
 *If it's breaking, try running `pip3 install -U pip setuptools`. Sometimes they are out of date.*
@@ -45,13 +44,13 @@ Installing Dependencies
 -----
 Not Difficult, I promise!
 
-On Debian/Ubuntu: `sudo apt-get install python3-pip gcc pybind11-dev libmagickwand-dev`
+On Debian/Ubuntu: `sudo apt-get install python3-pip gcc libmagickwand-dev`
 
-On Mac: `brew install python3 gcc pybind11 imagemagick`
+On Mac: `brew install python3 gcc imagemagick`
 * You will need Homebrew ( copy/paste a command from http://brew.sh/ to install ) and XCode Command Line Tools for gcc (it should prompt you to install this).
 * If this doesn't install pip, run `brew install python3; curl https://bootstrap.pypa.io/get-pip.py | python3`
 
-On Other: You need **python 3.5**, pip, a newer version (must support C++14) of **gcc**, and pybind11 in your `includes`.
+On Other: You need **python 3.5**, pip, a newer version (must support C++14) of **gcc**.
 
 
 Basic Library Usage

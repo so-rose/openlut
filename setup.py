@@ -2,13 +2,17 @@
 
 import sys, os
 import os.path as path
+from os.path import join
 
 from setuptools import setup
 from setuptools import Extension
 from setuptools import find_packages
 
-#pybind11, a dependency, can report its own includes!
+#pybind11, a dep of openlut, can report its own includes for gcc compilation!
 import pybind11
+
+def read(fname):
+    return open(join(path.dirname(__file__), fname)).read()
 
 #Make sure we're using gcc.
 os.environ["CC"] = "g++"
@@ -19,15 +23,17 @@ link_args = ['-fopenmp']
 
 olOpt = Extension(	'openlut.lib.olOpt',
 					sources = ['openlut/lib/olOpt.cpp'],
-					include_dirs=[pybind11.get_include()], #Include pybind11.
+					include_dirs=[pybind11.get_include()], #Include pybind11 from its pip package.
 					language = 'c++',
 					extra_compile_args = cpp_args,
 					extra_link_args = cpp_args
 		)
 
 setup(	name = 'openlut',
-		version = '0.2.1',
+		version = '0.2.4',
 		description = 'OpenLUT is a practical color management library.',
+		long_description = read('README.rst'),
+		
 		author = 'Sofus Rose',
 		author_email = 'sofus@sofusrose.com',
 		url = 'https://www.github.com/so-rose/openlut',

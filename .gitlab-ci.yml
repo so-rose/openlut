@@ -1,0 +1,46 @@
+# This file is a template, and might need editing before it works on your project.
+# use the official gcc image, based on debian
+# can use verions as well, like gcc:5.2
+# see https://hub.docker.com/_/gcc/
+image: sorose/graphics:v8
+
+stages:
+    - build
+    - build-docs
+    - deploy-docs
+    - test
+#    - review
+
+before_script: 
+    - apt update && apt -y install python3-pip gcc libmagickwand-dev
+    - rm -rf dist build docs/build openlut.egg-info
+
+build:
+    stage: build
+    script: 
+        - python3 setup.py sdist #Build source distribution.
+        - python3 setup.py bdist_wheel #Build Linux wheel.
+    artifacts:
+        paths:
+            - dist/*
+
+build-docs:
+    stage: build-docs
+    script:
+        - ./mkDocs.sh
+    artifacts:
+        paths:
+            - docs/build/html
+            
+deploy-docs:
+    stage: deploy-docs
+    environment:
+        name: Documentation
+        url: https://www.sofusrose.com/openlut
+    when: manual
+
+# run tests using the binary built before.
+test:
+    stage: test
+    script:
+        - python3 tests/suite.py
