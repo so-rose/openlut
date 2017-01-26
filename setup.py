@@ -31,7 +31,7 @@ olOpt = Extension(	'openlut.lib.olOpt',
 		)
 
 setup(	name = 'openlut',
-		version = '0.2.0',
+		version = '0.2.1',
 		description = 'OpenLUT is a practical color management library.',
 		author = 'Sofus Rose',
 		author_email = 'sofus@sofusrose.com',

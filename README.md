@@ -24,6 +24,9 @@ tools themselves as well - composing matrices, resizing LUTs, defining new gamma
 
 In many ways, OCIO is a system stringing basic operations together. I'd be perfectly plausible to write an OCIO alternative with openlut in the backend.
 
+Documentation
+-----
+Docs can be found at https://sofusrose.com/openlut. They're a work in progress for now (ColMap is 100% documented).
 
 Installation
 -----
