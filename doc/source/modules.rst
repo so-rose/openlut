@@ -1,4 +1,4 @@
-openlut
+Full Documentation
 =======
 
 .. toctree::

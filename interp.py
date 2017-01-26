@@ -1,6 +1,7 @@
 from functools import reduce
 from imp import reload
 
+import numpy as np
 import openlut as ol
 from openlut.lib.files import Log
 

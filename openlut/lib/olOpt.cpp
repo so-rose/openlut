@@ -144,6 +144,35 @@ py::array_t<float> matr(py::array_t<float> img, py::array_t<float> mat) {
 	}
 }
 
+//grey_to_rgb takes a flattened greyscale image array and outputs a flattened numpy image array.
+py::array_t<float> grey_to_rgb(py::array_t<float> arr) {
+	py::buffer_info bufIn = arr.request();
+	
+	//To use with an image, MAKE SURE to flatten the 3D array to a 1D array, then back out to a 3D array after.
+	if (bufIn.ndim == 1) {
+		//Make numpy allocate the buffer.
+		auto result = py::array_t<float>(bufIn.size * 3); //Size is multiplied by 3 - we're outputting RGB!
+		
+		//Get the pointers that we can manipulate from C++.
+		auto bufOut = result.request();
+		
+		float 	*ptrIn = (float *) bufIn.ptr,
+				*ptrOut = (float *) bufOut.ptr;
+		
+		//The reason for all this bullshit as opposed to vectorizing is this pragma!!!
+		#pragma omp parallel for
+		for (size_t i = 0; i < bufOut.shape[0]; i+=3) {
+			float val = ptrIn[(i+1)/3 - 1]; //Little bit of indexing math to get the value; remember we're skipping by threes.
+			
+			ptrOut[i] = val;
+			ptrOut[i + 1] = val;
+			ptrOut[i + 2] = val;
+		}
+		
+		return result;
+	}
+}
+
 
 
 
@@ -162,6 +191,12 @@ PYBIND11_PLUGIN(olOpt) {
 				"Apply any flattened color matrix to a flattened numpy image array; vectorized & parallel.",
 				py::arg("img"),
 				py::arg("mat")
+	);
+	
+	mod.def(	"grey_to_rgb",
+				&grey_to_rgb,
+				"Takes a flattened 2D greyscale image array and outputs a flattened 3D numpy image array.",
+				py::arg("arr")
 	);
 	
 	mod.def(	"lut1dlin",

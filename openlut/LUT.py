@@ -69,29 +69,27 @@ class LUT(Transform) :
 		'''
 		return LUT.lutArray(splev(np.linspace(0, 1, num=len(idArr)), splrep(idArr, mapArr)))
 		
-#LUT Functions.
+#Transform Functions.
 	def _splInterp(q, cpu, spSeq, ID, array) :
 		q.put( (cpu, splev(spSeq, splrep(ID, array))) ) #Spline Interpolation. Pretty quick, considering.
 	
 	def sample(self, fSeq, spl=True) :
 		'''
-		Sample the LUT using a flat float sequence (ideally a numpy array; (0..1) ).
+		Apply the 1D LUT to the numpy image array, using fast C++ math.
 		
-		Each n (dimensions) clump of arguments will be used to sample the LUT. So:
-			1D LUT: in1, in2, in3 --> out1, out2, out3
-			*Min 1 argument.
+		Latest Performance:
+			apply(ol.LUT): 0.026462205679908948,, (avg. 100 Trials) *sRGB LUT
 			
-			3D LUT: inR, inG, inB --> outR, outG, outB
-			*Min 3 arguments, len(arguments) % 3 must equal 0.
-			
-		Returns a numpy array with identical shape to the input array.
+		:return: Returns a numpy array with identical shape to the input array.
 		'''
 				
 		fSeq = np.array(fSeq)
 		if self.dims == 1 :
-			#If scipy isn't loaded, we can't use spline interpolation!
-			if (not MOD_SCIPY) or self.size > 25 : # Auto-adapts all but the smallest LUTs to use the faster linear interpolation.
+			
+			#Scipy must be loaded & the LUT must be rediculously small before spline interpolation sets in.
+			if (not MOD_SCIPY) or self.size > 25 :
 				return olo.lut1dlin(fSeq.reshape(reduce(lambda a, b: a*b, fSeq.shape)), self.array, self.range[0], self.range[1]).reshape(fSeq.shape)
+				
 			else :
 				#~ return np.interp(spSeq, self.ID, self.array) #non-threaded way.
 				out = []
@@ -109,6 +107,7 @@ class LUT(Transform) :
 		elif self.dims == 3 :
 			print("3D LUT Not Implemented!")
 			
+#LUT Functions
 	def resized(self, newSize) :
 		'''
 		Return the LUT, resized to newSize.

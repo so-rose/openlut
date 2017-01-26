@@ -6,12 +6,17 @@
 Welcome to openlut's documentation!
 ===================================
 
-Contents:
+
+Table of Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
-
+   intro
+   imageio
+   transforms
+   builtins
+   
 
 Indices and tables
 ==================
@@ -20,3 +25,12 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+Full Docs
+=========
+
+No nice explanations here - just all the docs in a list.
+
+.. toctree::
+	:maxdepth: 3
+	
+	modules
