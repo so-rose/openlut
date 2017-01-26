@@ -14,6 +14,7 @@ build:
     stage: build
     before_script: 
         - apt-get update && apt-get -y install gcc libmagickwand-dev make
+        - pip3 install -U pip setuptools wheel
         - pip3 install -r requirements.txt
         - ./mkDocs.sh
     script: 
