@@ -1,15 +1,8 @@
-openlut package
+openlut
 ===============
 
-Subpackages
------------
-
-.. toctree::
-
-    openlut.lib
-
-Module contents
----------------
+Package contents
+---------------------
 
 .. automodule:: openlut
     :members:
@@ -17,9 +10,9 @@ Module contents
     :show-inheritance:
 
 C++ Extension: olOpt
---------------
+------------------------
 
-.. automodule:: openlut.lib.olOpt
+.. automodule:: openlut.olOpt
     :members:
     :undoc-members:
     :show-inheritance:

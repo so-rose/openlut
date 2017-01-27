@@ -1,10 +1,10 @@
 Transforms
 =================
 
-Doing image transforms in openlut uses the :py:func:`~ColMap.apply` method to apply Transform objects. A Transform
+Doing image transforms in openlut uses the :py:func:`~openlut.ColMap.apply` method to apply Transform objects. A Transform
 object is any subclass of the Transform listed below. Examples include LUT, Func, and ColMat.
 
-openlut.Transform module
+Transform: The Base
 ------------------------
 
 .. automodule:: openlut.Transform
@@ -13,24 +13,24 @@ openlut.Transform module
     :show-inheritance:
 
 
-openlut.LUT module
-------------------
+LUT: 1D Lookup Tables
+------------------------
 
 .. automodule:: openlut.LUT
     :members:
     :undoc-members:
     :show-inheritance:
 
-openlut.Func module
--------------------
+Func: Gamma Functions
+-----------------------------
 
 .. automodule:: openlut.Func
     :members:
     :undoc-members:
     :show-inheritance:
 
-openlut.ColMat module
----------------------
+ColMat: Color Matrices
+---------------------------
 
 .. automodule:: openlut.ColMat
     :members:

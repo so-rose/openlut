@@ -25,22 +25,21 @@ class ColMap :
 	'''
 	The ColMap class stores an image in its 32 bit float internal working space.
 	
-	:var DEPTHS: A dictionary of depths in relation to the Depths dictionary.
-	
-	ColMaps are initialized by default with 0's; a black image. You can use
-	`open` to load a path, :py:func:`~fromArray` to load from a numpy array, or :py:func:`~fromBinary` to load from
-	a binary representation (useful in pipes).
-	
 	:param shape: The numpy-style shape of the empty image. Specify width, then height.
 	:type shape: tuple[int, int] or tuple[int, int, int]
 	:param depth: The integer depth used for int format's input and output. Set to DEPTHS['full'] by default.
 	:type depth: int or None
+	
+	ColMaps are initialized by default with 0's; a black image. You can use
+	`open` to load a path, :py:func:`~openlut.ColMap.fromArray` to load from a numpy array, or :py:func:`~openlut.ColMap.fromBinary` to load from
+	a binary representation (useful in pipes).
 	
 	:return: An empty ColMap, holding a black image of specified shape.
 	:raises ValueError: When trying to use unsupported bit depth.
 	:raises ValueError: When using invalid image shape.
 	'''
 	
+	#: A static dictionary of supported bit depths. 'default' is never actually used.
 	DEPTHS = {	'default'	: None,
 				'comp'		: 8,
 				'half'		: 16,
@@ -64,7 +63,7 @@ class ColMap :
 		'''
 		Initialize a ColMap from a numpy array of either float or int type (containing an image).
 		
-		See :py:class:`~ColMap` initialization for a lower-level constructor.
+		See :py:class:`~openlut.ColMap` initialization for a lower-level constructor.
 		
 		:param imgArr: The numpy image array. Must have shape (width, height, 3)
 		:param depth: The integer depth used for int format's input and output. None will use highest available.
@@ -111,7 +110,7 @@ class ColMap :
 	@staticmethod
 	def fromBinary(binData, fmt, width=None, height=None) :
 		'''
-		Construct a ColMap from an image in binary form. See :py:func:`~ColMap.toBinary` for the inverse.
+		Construct a ColMap from an image in binary form. See :py:func:`~openlut.ColMap.toBinary` for the inverse.
 		
 		* This won't work for greyscale data - it's assumed to be RGB.
 		
@@ -120,7 +119,7 @@ class ColMap :
 		:param str width: You may specify a specific width if you're having problems.
 		:param str height: You may specify a specific height if you're having problems.
 		:return: The image, as a ColMat.
-		:rtype: :py:class:`~ColMap`
+		:rtype: :py:class:`~openlut.ColMap`
 		
 		This is great for pipes, where you're receiving binary data through stdin.
 			* Set binData to `sys.stdin.buffer.read()` in a script to pipe data into it!
@@ -139,7 +138,7 @@ class ColMap :
 		
 		:param str path: The image path to open.
 		:return: The image, as a ColMat.
-		:rtype: :py:class:`~ColMap`
+		:rtype: :py:class:`~openlut.ColMap`
 		
 		ColMap currently uses ImageMagick to open a wide range of formats, including:
 		
@@ -163,14 +162,14 @@ class ColMap :
 #Operations - returns new ColMaps.
 	def apply(self, transform) :
 		'''
-		Apply an image transformation, in the form of a subclass of :py:class:`~Transform`.
+		Apply an image transformation, in the form of a subclass of :py:class:`~openlut.Transform`.
 		
-		You can apply LUTs, gamma functions, matrices - simply insert an instance of :py:class:`~LUT`,
-		:py:class:`~Func`, :py:class:`~ColMat`, or any other :py:class:`~Transform` object to apply it
+		You can apply LUTs, gamma functions, matrices - simply insert an instance of :py:class:`~openlut.LUT`,
+		:py:class:`~openlut.Func`, :py:class:`~openlut.ColMat`, or any other :py:class:`~openlut.Transform` object to apply it
 		to the image!
 		
 		:param transform: An image transform.
-		:type transform: :py:class:`~Transform`
+		:type transform: :py:class:`~openlut.Transform`
 		:return: A transformed ColMap.
 		'''
 		return ColMap.fromArray(transform.sample(self.asarray()))
@@ -179,11 +178,11 @@ class ColMap :
 	@staticmethod
 	def openWand(path) :
 		'''
-		Vendor-specific :py:func:`~ColMap.open` function. See :py:func:`~ColMap.open`
+		Vendor-specific :py:func:`~openlut.ColMap.open` function. See :py:func:`~openlut.ColMap.open`
 		
 		:param str path: The image path to open.
 		:return: The image, as a ColMat.
-		:rtype: :py:class:`~ColMap`
+		:rtype: :py:class:`~openlut.ColMap`
 		'''
 		
 		with wand.image.Image(filename=path) as img:
@@ -238,7 +237,7 @@ class ColMap :
 
 	def saveWand(self, path, compress = None, depth = None) :
 		'''
-		Vendor-specific :py:func:`~ColMap.save` function. See :py:func:`~ColMap.save`
+		Vendor-specific :py:func:`~openlut.ColMap.save` function. See :py:func:`~openlut.ColMap.save`
 		
 		:param str path: The image path to save to.
 		:param compress: Compression options passed to Wand. Currently broken.
@@ -274,7 +273,7 @@ class ColMap :
 		
 		:param width: The desired width of the viewer; the height is automatically gleaned from the aspect ratio.
 		
-		For the viewer source code, see :py:class:`~Viewer`.
+		For the viewer source code, see :py:class:`~openlut.Viewer`.
 		'''
 		
 		img = ColMap.open(path).rgbArr
@@ -291,7 +290,7 @@ class ColMap :
 		
 		:param width: The desired width of the viewer; the height is automatically gleaned from the aspect ratio.
 		
-		For the viewer source code, see :py:class:`~Viewer`.
+		For the viewer source code, see :py:class:`~openlut.Viewer`.
 		'''
 		
 		#Use my custom OpenGL viewer!
@@ -328,13 +327,13 @@ class ColMap :
 			
 	def toBinary(self, fmt, depth=None) :
 		'''
-		Output this ColMap in binary form. See :py:func:`~ColMap.fromBinary` for the inverse.
+		Output this ColMap in binary form. See :py:func:`~openlut.ColMap.fromBinary` for the inverse.
 				
 		:param str fmt: Wand needs to know what format to output! See https://www.imagemagick.org/script/formats.php .
 		:param depth: You may override the ColMap's bit depth if you wish.
 		:type depth: int or None
 		:return: The image, as a ColMat.
-		:rtype: :py:class:`~ColMap`
+		:rtype: :py:class:`~openlut.ColMap`
 		
 		This is great for pipes, where you're sending binary data through stdout.
 			* Use the return value as the argument of sys.stdout.write() to pipe the image to other applications!
@@ -384,3 +383,6 @@ class ColMap :
 #Overloads
 	def __repr__(self) :
 		return 'ColMap.fromArray( \n\trgbArr = {0}\n)'.format('\n\t\t'.join([line.strip() for line in repr(self.rgbArr).split('\n')]))
+		
+	def __str__(self) :
+		return "<class ColMap>"

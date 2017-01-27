@@ -214,7 +214,7 @@ PYBIND11_PLUGIN(olOpt) {
 	
 	mod.def(	"lin",
 				&lin,
-				"The linear gamma function.",
+				"The lin --> lin gamma function.",
 				py::arg("x")
 	);
 	

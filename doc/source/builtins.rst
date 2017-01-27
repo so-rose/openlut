@@ -1,17 +1,18 @@
 Builtin Resources
 =================
 
-openlut.gamma module
---------------------
+gamma: Gamma functions.
+------------------------
 
 .. automodule:: openlut.gamma
     :members:
     :undoc-members:
     :show-inheritance:
+    :exclude-members: PGamma
 
 
-openlut.gamut module
---------------------
+gamut: Color Matrices.
+-----------------------
 
 .. automodule:: openlut.gamut
     :members:
@@ -19,14 +20,15 @@ openlut.gamut module
     :show-inheritance:
 
 
-openlut.lib.olOpt module
-------------------------
+olOpt: Low-Level Optimized Functions
+------------------------------------------
 
 olOpt is the reason openlut is snappy! It contains the lower-level, fast functions
 that drive the rest of openlut.
 
 
-.. automodule:: openlut.lib.olOpt
+.. automodule:: openlut.olOpt
     :members:
     :undoc-members:
     :show-inheritance:
+    :noindex:

@@ -6,6 +6,7 @@
 Welcome to openlut's documentation!
 ===================================
 
+You'll find tutorials, explanations, and everything you'll need to get going with openlut!
 
 Table of Contents:
 
@@ -31,6 +32,6 @@ Full Docs
 No nice explanations here - just all the docs in a list.
 
 .. toctree::
-	:maxdepth: 3
+	:maxdepth: 2
 	
 	modules

@@ -7,13 +7,30 @@ from .lib import olOpt as olo
 #Static Gamma Functions, borrowed from olo.
 #inv goes from space to lin.
 
+#: The lin --> lin gamma function. An alias for olOpt's fast :py:func:`~openlut.olOpt.lin`.
 lin = olo.lin
+
+#: The lin --> sRGB gamma function. An alias for olOpt's fast :py:func:`~openlut.olOpt.sRGB`.
 sRGB = olo.sRGB
+
+#: The sRGB --> lin gamma function. An alias for olOpt's fast :py:func:`~openlut.olOpt.sRGBinv`.
 sRGBinv = olo.sRGBinv
+
+#: The lin --> Rec709 gamma function. An alias for olOpt's fast :py:func:`~openlut.olOpt.Rec709`.
 Rec709 = olo.Rec709
+
+#: The lin --> ReinhardHDR gamma function. An alias for olOpt's fast :py:func:`~openlut.olOpt.ReinhardHDR`.
 ReinhardHDR = olo.ReinhardHDR
+
+#: The lin --> sLog gamma function. An alias for olOpt's fast :py:func:`~openlut.olOpt.sLog`. See 
+#: https://pro.sony.com/bbsccms/assets/files/mkt/cinema/solutions/slog_manual.pdf .
 sLog = olo.sLog
+
+#: The lin --> sLog2 gamma function. An alias for olOpt's fast :py:func:`~openlut.olOpt.sLog2`. See 
+#: http://community.sony.com/sony/attachments/sony/large-sensor-camera-F5-F55/12359/2/TechnicalSummary_for_S-Gamut3Cine_S-Gamut3_S-Log3_V1_00.pdf .
 sLog2 = olo.sLog2
+
+#: The lin --> DanLog gamma function. An alias for olOpt's fast fast :py:func:`~openlut.olOpt.DanLog`.
 DanLog = olo.DanLog
 
 class PGamma :
@@ -25,7 +42,7 @@ class PGamma :
 
 	def sRGB(x) :
 		'''
-		sRGB formula. Domain must be within [0, 1].
+		The lin --> lin gamma function.
 		'''
 		return ( (1.055) * (x ** (1.0 / 2.4)) ) - 0.055 if x > 0.0031308 else x * 12.92
 	def sRGBinv(x) :
