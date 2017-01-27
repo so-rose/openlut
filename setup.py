@@ -14,7 +14,7 @@ import pybind11
 def read(fname):
     return open(join(path.dirname(__file__), fname)).read()
     
-pypi_deps = ['numpy', 'wand', 'scipy', 'pygame','PyOpenGL', 'setuptools', 'pybind11']
+pypi_deps = ['numpy', 'wand', 'scipy', 'pygame','PyOpenGL', 'setuptools', 'pybind11', 'wheel']
 
 #Make sure we're using gcc.
 os.environ["CC"] = "g++"
