@@ -32,7 +32,7 @@ olOpt = Extension(	'openlut.lib.olOpt',
 		)
 
 setup(	name = 'openlut',
-		version = '0.2.4',
+		version = '0.2.6',
 		description = 'OpenLUT is a practical color management library.',
 		long_description = read('README.rst'),
 		
