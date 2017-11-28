@@ -41,8 +41,8 @@ class LUT(Transform) :
 		if dims == 1 :
 			lut = LUT(dims=dims, size=size, title=title, iRange=iRange)
 			
-			#Use fast function sampling if the function is a C++ function.
-			vFunc = lambda arr: olo.gam(arr, func) if isinstance(func, types.BuiltinFunctionType) else np.vectorize(func, otypes=[np.float32])
+			#Use fast C++ function sampling if the function is a C++ function.
+			vFunc = lambda arr: olo.gam(arr, func) if isinstance(func, types.BuiltinFunctionType) else np.vectorize(func, otypes=[np.float32])(arr)
 			lut.array = vFunc(lut.array)
 			
 			return lut
